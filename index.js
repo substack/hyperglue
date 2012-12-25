@@ -5,12 +5,12 @@ module.exports = function (src, updates) {
         div = div.childNodes[0];
     }
     
-    Object.keys(updates).forEach(function (selector) {
+    forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
         var nodes = div.querySelectorAll(selector);
         for (var i = 0; i < nodes.length; i++) {
             if (typeof value === 'object') {
-                Object.keys(value).forEach(function (key) {
+                forEach(objectKeys(value), function (key) {
                     if (key === '_text') {
                         nodes[i].textContent = value[key];
                     }
@@ -25,4 +25,15 @@ module.exports = function (src, updates) {
     });
     
     return div;
+};
+
+function forEach(xs, f) {
+    if (xs.forEach) return xs.forEach(f);
+    for (var i = 0; i < xs.length; i++) f(xs[i], i)
+}
+
+var objectKeys = Object.keys || function (obj) {
+    var res = [];
+    for (var key in obj) res.push(key);
+    return res;
 };
