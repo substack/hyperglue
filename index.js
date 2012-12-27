@@ -1,8 +1,11 @@
 module.exports = function (src, updates) {
-    var div = document.createElement('div');
-    div.innerHTML = src.trim();
-    if (div.childNodes.length === 1) {
-        div = div.childNodes[0];
+    var div = src;
+    if (typeof div !== 'object') {
+        div = document.createElement('div');
+        div.innerHTML = src.trim();
+        if (div.childNodes.length === 1) {
+            div = div.childNodes[0];
+        }
     }
     
     forEach(objectKeys(updates), function (selector) {
