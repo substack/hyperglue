@@ -3,6 +3,8 @@
 update html elements by mapping query selectors to attributes, text, and
 hypertext
 
+[![browser support](http://ci.testling.com/substack/hyperglue.png)](http://ci.testling.com/substack/hyperglue)
+
 # example
 
 ``` js

@@ -10,6 +10,13 @@
     "scripts" : {
         "test" : "tap test/*.js"
     },
+    "testling" : {
+        "files" : "test/*.js",
+        "browsers" : [
+            "ie8", "ie9", "chrome/20", "firefox/17",
+            "safari/5.1", "opera/12"
+        ]
+    },
     "repository" : {
         "type" : "git",
         "url" : "git://github.com/substack/hyperglue.git"
