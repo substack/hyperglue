@@ -12,10 +12,18 @@ module.exports = function (src, updates) {
         var value = updates[selector];
         var nodes = div.querySelectorAll(selector);
         for (var i = 0; i < nodes.length; i++) {
-            if (typeof value === 'object') {
+            if (isElement(value)) {
+                nodes[i].innerHTML = '';
+                nodes[i].appendChild(value);
+            }
+            else if (value && typeof value === 'object') {
                 forEach(objectKeys(value), function (key) {
                     if (key === '_text') {
-                        nodes[i].textContent = value[key];
+                        setText(nodes[i], value[key]);
+                    }
+                    else if (key === '_html' && isElement(value[key])) {
+                        nodes[i].innerHTML = '';
+                        nodes[i].appendChild(value[key]);
                     }
                     else if (key === '_html') {
                         nodes[i].innerHTML = value[key];
@@ -23,7 +31,7 @@ module.exports = function (src, updates) {
                     else nodes[i].setAttribute(key, value[key]);
                 });
             }
-            else nodes[i].textContent = value;
+            else setText(nodes[i], value);
         }
     });
     
@@ -40,3 +48,15 @@ var objectKeys = Object.keys || function (obj) {
     for (var key in obj) res.push(key);
     return res;
 };
+
+function isElement (e) {
+    return e && typeof e === 'object' && e.childNodes
+        && typeof e.appendChild === 'function'
+    ;
+}
+
+function setText (e, s) {
+    e.innerHTML = '';
+    var txt = document.createTextNode(s);
+    e.appendChild(txt);
+}
