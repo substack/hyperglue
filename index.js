@@ -1,4 +1,6 @@
 module.exports = function (src, updates) {
+    if (!updates) updates = {};
+    
     var div = src;
     if (typeof div !== 'object') {
         div = document.createElement('div');
