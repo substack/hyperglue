@@ -4,7 +4,7 @@ module.exports = function (src, updates) {
     var div = src;
     if (typeof div !== 'object') {
         div = document.createElement('div');
-        div.innerHTML = src.trim();
+        div.innerHTML = src.replace(/^\s+|\s+$/g, '');
         if (div.childNodes.length === 1) {
             div = div.childNodes[0];
         }
