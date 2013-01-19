@@ -1,7 +1,10 @@
-module.exports = [
+var html = [
 '<div class="article">',
 '<div class="title">',
-'<a name="robots_are_pretty_great" href="#robots_are_pretty_great">robots are pretty great</a>',
+[
+  '<a name="robots_are_pretty_great" href="#robots_are_pretty_great">robots are pretty great</a>',
+  '<a href="#robots_are_pretty_great" name="robots_are_pretty_great">robots are pretty great</a>'
+],
 '</div>',
 '<div class="inner">',
 '<div class="headers">',
@@ -48,4 +51,29 @@ module.exports = [
 '<p><em>rawr</em></p></div>',
 '</div>',
 '</div>'
-].join('\n');
+];
+
+module.exports = (function concatenate (xs) {
+    var variants = [ [] ];
+    var strings = [];
+    
+    for (var i = 0; i < xs.length; i++) {
+        var line = xs[i];
+        if (isArray(line)) {
+            for (var j = 1; j < line.length; j++) {
+                var xs_ = variants[0].concat(line[j], xs.slice(i+1));
+                strings.push.apply(strings, concatenate(xs_));
+            }
+            line = line[0];
+        }
+        variants[0].push(line);
+    }
+    
+    strings[0] = variants[0].join('\n');
+    return strings;
+})(html);
+
+function isArray (xs) {
+    if (Array.isArray) return Array.isArray(xs);
+    return Object.prototype.toString.call(xs) === '[object Array]';
+}

@@ -47,5 +47,10 @@ test(function (t) {
         body: '<h1>title text</h1>\n\n<p>beep boop.</p>\n\n<p><em>rawr</em></p>'
     }));
     
-    t.equal(element.innerHTML, expected);
+    if (expected[0] === element.innerHTML) {
+        t.equal(element.innerHTML, expected[0]);
+    }
+    else {
+        t.equal(element.innerHTML, expected[1]);
+    }
 });
