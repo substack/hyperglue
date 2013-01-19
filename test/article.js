@@ -43,11 +43,11 @@ test(function (t) {
         body: '<h1>title text</h1>\n\n<p>beep boop.</p>\n\n<p><em>rawr</em></p>'
     }));
     
-    if (expected[0] === element.innerHTML) {
-        t.equal(element.innerHTML, expected[0]);
+    for (var i = 0; i < expected.length; i++) {
+        var html = expected[i].toLowerCase();
+        if (html === element.innerHTML || i === expected.length - 1) {
+            t.equal(element.innerHTML, html);
+            break;
+        }
     }
-    else {
-        t.equal(element.innerHTML, expected[1]);
-    }
-    
 });
