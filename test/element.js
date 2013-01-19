@@ -3,6 +3,7 @@ var test = require('tape');
 var hyperglue = require('../');
 var html = require('./article/html');
 var expected = require('./article/expected');
+var compare = require('./article/compare');
 
 function createArticle (doc) {
     var name = doc.title.replace(/[^A-Za-z0-9]+/g,'_');
@@ -47,13 +48,7 @@ test(function (t) {
         body: '<h1>title text</h1>\n\n<p>beep boop.</p>\n\n<p><em>rawr</em></p>'
     }));
     
-    for (var i = 0; i < expected.length; i++) {
-        var a = expected[i].toLowerCase();
-        var b = element.innerHTML.toLowerCase().replace(/\r\n/g, '\n');
-        if (a === b) return t.equal(a, b);
-    }
-    t.equal(
-        expected[0].toLowerCase(),
-        element.innerHTML.toLowerCase().replace(/\r\n/g, '\n')
-    );
+    compare(expected, element, function (a, b) {
+        t.equal(a, b);
+    });
 });
