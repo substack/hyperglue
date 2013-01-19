@@ -27,7 +27,10 @@ var html = [
 '</div>',
 '</div><div class="article">',
 '<div class="title">',
-'<a name="testing_title" href="#testing_title">testing title</a>',
+[
+  '<a name="testing_title" href="#testing_title">testing title</a>',
+  '<a href="#testing_title" name="testing_title">testing title</a>'
+],
 '</div>',
 '<div class="inner">',
 '<div class="headers">',
