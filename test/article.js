@@ -22,7 +22,10 @@ function createArticle (doc) {
 test(function (t) {
     t.plan(1);
     
-    document.body.appendChild(createArticle({
+    var element = document.createElement('div');
+    document.body.appendChild(element);
+    
+    element.appendChild(createArticle({
         file: 'grobot.markdown',
         author: 'James Halliday',
         date: 'Mon Dec 24 15:31:27 2012 -0800',
@@ -31,7 +34,7 @@ test(function (t) {
         body: '<h1>robots!</h1>\n\n<p>Pretty great basically.</p>'
     }));
     
-    document.body.appendChild(createArticle({
+    element.appendChild(createArticle({
         file: 'test.markdown',
         author: 'James Halliday',
         date: 'Mon Dec 24 04:31:53 2012 -0800',
@@ -40,5 +43,5 @@ test(function (t) {
         body: '<h1>title text</h1>\n\n<p>beep boop.</p>\n\n<p><em>rawr</em></p>'
     }));
     
-    t.equal(document.body.innerHTML, expected);
+    t.equal(element.innerHTML, expected);
 });
