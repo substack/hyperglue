@@ -44,10 +44,9 @@ test(function (t) {
     }));
     
     for (var i = 0; i < expected.length; i++) {
-        var html = expected[i].toLowerCase();
-        if (html === element.innerHTML || i === expected.length - 1) {
-            t.equal(element.innerHTML, html);
-            break;
-        }
+        var a = expected[i].toLowerCase();
+        var b = element.innerHTML.toLowerCase();
+        if (a === b) return t.equal(a, b);
     }
+    t.equal(expected[0].toLowerCase(), element.innerHTML.toLowerCase());
 });
