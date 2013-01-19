@@ -55,7 +55,7 @@ var html = [
 
 module.exports = (function concatenate (xs) {
     var variants = [ [] ];
-    var strings = [];
+    var strings = [ null ];
     
     for (var i = 0; i < xs.length; i++) {
         var line = xs[i];
