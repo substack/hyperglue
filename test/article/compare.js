@@ -10,5 +10,6 @@ function fudge (html) {
     return html.toLowerCase()
         .replace(/\r\n/g, '\n')
         .replace(/"/g, '')
+        .replace(/\n/g, '')
     ;
 }
