@@ -45,8 +45,11 @@ test(function (t) {
     
     for (var i = 0; i < expected.length; i++) {
         var a = expected[i].toLowerCase();
-        var b = element.innerHTML.toLowerCase();
+        var b = element.innerHTML.toLowerCase().replace(/\r\n/g, '\n');
         if (a === b) return t.equal(a, b);
     }
-    t.equal(expected[0].toLowerCase(), element.innerHTML.toLowerCase());
+    t.equal(
+        expected[0].toLowerCase(),
+        element.innerHTML.toLowerCase().replace(/\r\n/g, '\n')
+    );
 });
