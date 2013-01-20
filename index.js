@@ -1,6 +1,6 @@
 module.exports = function (src, updates) {
     if (!updates) updates = {};
-    
+
     var div = src;
     if (typeof div !== 'object') {
         div = document.createElement('div');
@@ -9,36 +9,45 @@ module.exports = function (src, updates) {
             div = div.childNodes[0];
         }
     }
-    
+
     forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
         var nodes = div.querySelectorAll(selector);
-        for (var i = 0; i < nodes.length; i++) {
-            if (isElement(value)) {
-                nodes[i].innerHTML = '';
-                nodes[i].appendChild(value);
+        if(nodes.length === 0) {
+            bind(div, value);
+        }
+        else {
+            for (var i = 0; i < nodes.length; i++) {
+                bind(nodes[i], value);
             }
-            else if (value && typeof value === 'object') {
-                forEach(objectKeys(value), function (key) {
-                    if (key === '_text') {
-                        setText(nodes[i], value[key]);
-                    }
-                    else if (key === '_html' && isElement(value[key])) {
-                        nodes[i].innerHTML = '';
-                        nodes[i].appendChild(value[key]);
-                    }
-                    else if (key === '_html') {
-                        nodes[i].innerHTML = value[key];
-                    }
-                    else nodes[i].setAttribute(key, value[key]);
-                });
-            }
-            else setText(nodes[i], value);
         }
     });
-    
+
     return div;
 };
+
+function bind(node, value) {
+    if (isElement(value)) {
+        node.innerHTML = '';
+        node.appendChild(value);
+    }
+    else if (value && typeof value === 'object') {
+        forEach(objectKeys(value), function (key) {
+            if (key === '_text') {
+                setText(node, value[key]);
+            }
+            else if (key === '_html' && isElement(value[key])) {
+                node.innerHTML = '';
+                node.appendChild(value[key]);
+            }
+            else if (key === '_html') {
+                node.innerHTML = value[key];
+            }
+            else node.setAttribute(key, value[key]);
+        });
+    }
+    else setText(node, value);
+}
 
 function forEach(xs, f) {
     if (xs.forEach) return xs.forEach(f);
