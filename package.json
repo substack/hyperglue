@@ -1,6 +1,6 @@
 {
     "name" : "hyperglue",
-    "version" : "0.1.2",
+    "version" : "0.1.3",
     "description" : "update html elements by mapping query selectors to attributes, text, and hypertext",
     "main" : "index.js",
     "devDependencies" : {
