@@ -1,6 +1,6 @@
 module.exports = function (src, updates) {
     if (!updates) updates = {};
-
+    
     var div = src;
     if (typeof div !== 'object') {
         div = document.createElement('div');
@@ -9,7 +9,7 @@ module.exports = function (src, updates) {
             div = div.childNodes[0];
         }
     }
-
+    
     forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
         var nodes = div.querySelectorAll(selector);
@@ -22,7 +22,7 @@ module.exports = function (src, updates) {
             }
         }
     });
-
+    
     return div;
 };
 
