@@ -5,7 +5,9 @@ module.exports = function (src, updates) {
     if (typeof div !== 'object') {
         div = document.createElement('div');
         div.innerHTML = src.replace(/^\s+|\s+$/g, '');
-        if (div.childNodes.length === 1) {
+        if (div.childNodes.length === 1
+        && div.childNodes[0] && div.childNodes[0].constructor
+        && div.childNodes[0].constructor.name !== 'Text') {
             div = div.childNodes[0];
         }
     }
@@ -13,7 +15,7 @@ module.exports = function (src, updates) {
     forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
         var nodes = div.querySelectorAll(selector);
-        if(nodes.length === 0) {
+        if (nodes.length === 0) {
             bind(div, value);
         }
         else {
