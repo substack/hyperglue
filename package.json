@@ -4,11 +4,7 @@
     "description" : "update html elements by mapping query selectors to attributes, text, and hypertext",
     "main" : "index.js",
     "devDependencies" : {
-        "tap" : "~0.3.0",
         "tape" : "~0.1.5"
-    },
-    "scripts" : {
-        "test" : "tap test/*.js"
     },
     "testling" : {
         "files" : "test/*.js",
