@@ -15,13 +15,9 @@ module.exports = function (src, updates) {
     forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
         var nodes = div.querySelectorAll(selector);
-        if (nodes.length === 0) {
-            bind(div, value);
-        }
-        else {
-            for (var i = 0; i < nodes.length; i++) {
-                bind(nodes[i], value);
-            }
+        if (nodes.length === 0) return;
+        for (var i = 0; i < nodes.length; i++) {
+            bind(nodes[i], value);
         }
     });
     
