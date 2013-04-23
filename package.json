@@ -7,7 +7,7 @@
         "tape" : "~0.1.5"
     },
     "testling" : {
-        "files" : "test/*.js",
+        "files" : "test/browser/*.js",
         "browsers" : [
             "ie8", "ie9", "ie10", "chrome/20", "firefox/17",
             "safari/5.1", "opera/12"

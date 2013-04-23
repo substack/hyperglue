@@ -1,13 +1,17 @@
 var test = require('tape');
 
-var hyperglue = require('../');
-var html = require('./article/html');
-var expected = require('./article/expected');
-var compare = require('./article/compare');
+var hyperglue = require('../../');
+var html = require('../article/html');
+var expected = require('../article/expected');
+var compare = require('../article/compare');
 
 function createArticle (doc) {
     var name = doc.title.replace(/[^A-Za-z0-9]+/g,'_');
-    return hyperglue(html, {
+    var element = document.createElement('div');
+    element.innerHTML = html;
+    element = element.childNodes[0];
+    
+    return hyperglue(element, {
         '.title a': {
             name: name,
             href: '#' + name,
