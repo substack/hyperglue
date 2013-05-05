@@ -1,7 +1,7 @@
 module.exports = function (expected, element, cb) {
     for (var i = 0; i < expected.length; i++) {
-        var a = fudge(expected[i]);
-        var b = fudge(element.innerHTML);
+        var a = fudge(element.innerHTML);
+        var b = fudge(expected[i]);
         if (a === b || i === expected.length - 1) return cb(a, b);
     }
 };
