@@ -1,5 +1,6 @@
 var hyperglue = require('../');
-var html = require('./html');
+var fs = require('fs');
+var html = fs.readFileSync(__dirname + '/article.html');
 
 function createArticle (doc) {
     var name = doc.title.replace(/[^A-Za-z0-9]+/g,'_');
