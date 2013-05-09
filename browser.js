@@ -61,6 +61,7 @@ var objectKeys = Object.keys || function (obj) {
 function isElement (e) {
     return e && typeof e === 'object' && e.childNodes
         && typeof e.appendChild === 'function'
+        || typeof e.appendChild === 'object'
     ;
 }
 
