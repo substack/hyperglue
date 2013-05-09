@@ -1,33 +1,42 @@
 {
-    "name" : "hyperglue",
-    "version" : "0.1.5",
-    "description" : "update html elements by mapping query selectors to attributes, text, and hypertext",
-    "browser" : "browser.js",
-    "main" : "index.js",
-    "devDependencies" : {
-        "tape" : "~0.1.5"
+    "name": "hyperglue",
+    "version": "0.1.5",
+    "description": "update html elements by mapping query selectors to attributes, text, and hypertext",
+    "browser": "browser.js",
+    "main": "index.js",
+    "dependencies": {
+        "trumpet": "~0.3.3",
+        "ent": "~0.0.5",
+        "concat-stream": "~0.1.1"
     },
-    "testling" : {
-        "files" : "test/browser/*.js",
-        "browsers" : [
+    "devDependencies": {
+        "tape": "~0.3.3",
+        "tap": "~0.4.0"
+    },
+    "scripts": {
+        "test": "tap test/*.js"
+    },
+    "testling": {
+        "files": "test/browser/*.js",
+        "browsers": [
             "ie8", "ie9", "ie10", "chrome/20", "firefox/17",
             "safari/5.1", "opera/12"
         ]
     },
-    "repository" : {
-        "type" : "git",
-        "url" : "git://github.com/substack/hyperglue.git"
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/substack/hyperglue.git"
     },
-    "homepage" : "https://github.com/substack/hyperglue",
-    "keywords" : [
+    "homepage": "https://github.com/substack/hyperglue",
+    "keywords": [
         "browser",
         "html",
         "querySelector"
     ],
-    "author" : {
-        "name" : "James Halliday",
-        "email" : "mail@substack.net",
-        "url" : "http://substack.net"
+    "author": {
+        "name": "James Halliday",
+        "email": "mail@substack.net",
+        "url": "http://substack.net"
     },
-    "license" : "MIT"
+    "license": "MIT"
 }
