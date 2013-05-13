@@ -21,12 +21,12 @@ module.exports = function (html, params) {
                 var copy = shallowCopy(val);
                 delete copy._text;
                 node.update(
-                    ent.encode(val._text),
+                    ent.encode(String(val._text)),
                     Object.keys(copy).length ? copy : undefined
                 );
             }
             else {
-                node.update(ent.encode(val));
+                node.update(ent.encode(String(val)));
             }
         });
     });
