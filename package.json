@@ -5,7 +5,7 @@
     "browser": "browser.js",
     "main": "index.js",
     "dependencies": {
-        "trumpet": "~0.3.3",
+        "trumpet": "~0.3.4",
         "ent": "~0.0.5",
         "concat-stream": "~0.1.1"
     },

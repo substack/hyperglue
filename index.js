@@ -25,6 +25,9 @@ module.exports = function (html, params) {
                     Object.keys(copy).length ? copy : undefined
                 );
             }
+            else if (typeof val === 'object') {
+                node.update(String, val);
+            }
             else {
                 node.update(ent.encode(String(val)));
             }
