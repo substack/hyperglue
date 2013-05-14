@@ -30,6 +30,11 @@ module.exports = function (html, params) {
                 Object.keys(node.attributes).forEach(function (key) {
                     copy[key] = node.attributes[key];
                 });
+                Object.keys(copy).forEach(function (key) {
+                    if (copy[key] === undefined || copy[key] === null) {
+                        delete copy[key];
+                    }
+                });
                 node.update(String, copy);
             }
             else {
