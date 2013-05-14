@@ -11,6 +11,6 @@ test('attr', function (t) {
     t.ok(
         res === '<img class="a" src="/a.png">'
         || res === '<img src="/a.png" class="a">',
-        'not ok: ' + res
+        'has both class and src: ' + res
     );
 });

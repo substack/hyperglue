@@ -26,7 +26,11 @@ module.exports = function (html, params) {
                 );
             }
             else if (typeof val === 'object') {
-                node.update(String, val);
+                var copy = shallowCopy(val);
+                Object.keys(node.attributes).forEach(function (key) {
+                    copy[key] = node.attributes[key];
+                });
+                node.update(String, copy);
             }
             else {
                 node.update(ent.encode(String(val)));
