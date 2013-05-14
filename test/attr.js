@@ -3,7 +3,7 @@ var hyperglue = require('../');
 
 var html = '<img class="a">';
 
-test('attr', function (t) {
+test('add attr', function (t) {
     t.plan(1);
     
     var res = hyperglue(html, { 'img.a': { src: '/a.png' } }).innerHTML;
@@ -13,4 +13,10 @@ test('attr', function (t) {
         || res === '<img src="/a.png" class="a">',
         'has both class and src: ' + res
     );
+});
+
+test('remove attr', function (t) {
+    t.plan(1);
+    var res = hyperglue(html, { 'img.a': { src: undefined } }).innerHTML;
+    t.equal(res, '<img class="a">');
 });
