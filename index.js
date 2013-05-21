@@ -1,63 +1,72 @@
-var trumpet = require('trumpet');
-var ent = require('ent');
-var concat = require('concat-stream');
-
-module.exports = function (html, params) {
-    var tr = trumpet();
-    Object.keys(params).forEach(function (key) {
-        var val = params[key];
-        
-        tr.select(key, function (node) {
-            if (!val) return;
-            
-            if (typeof val === 'object' && val._html !== undefined) {
-                var copy = shallowCopy(val);
-                delete copy._html;
-                node.update(function (html) {
-                    return val._html;
-                }, Object.keys(copy).length ? copy : undefined);
-            }
-            else if (typeof val === 'object' && val._text !== undefined) {
-                var copy = shallowCopy(val);
-                delete copy._text;
-                node.update(
-                    ent.encode(String(val._text)),
-                    Object.keys(copy).length ? copy : undefined
-                );
-            }
-            else if (typeof val === 'object') {
-                var copy = shallowCopy(val);
-                Object.keys(node.attributes).forEach(function (key) {
-                    if (val[key] === undefined) {
-                        copy[key] = node.attributes[key];
-                    }
-                });
-                Object.keys(copy).forEach(function (key) {
-                    if (copy[key] === undefined || copy[key] === null) {
-                        delete copy[key];
-                    }
-                });
-                node.update(String, copy);
-            }
-            else {
-                node.update(ent.encode(String(val)));
-            }
-        });
+module.exports = function (src, updates) {
+    if (!updates) updates = {};
+    
+    var div = src;
+    if (typeof div !== 'object') {
+        div = document.createElement('div');
+        div.innerHTML = src.replace(/^\s+|\s+$/g, '');
+        if (div.childNodes.length === 1
+        && div.childNodes[0] && div.childNodes[0].constructor
+        && div.childNodes[0].constructor.name !== 'Text') {
+            div = div.childNodes[0];
+        }
+    }
+    
+    forEach(objectKeys(updates), function (selector) {
+        var value = updates[selector];
+        var nodes = div.querySelectorAll(selector);
+        if (nodes.length === 0) return;
+        for (var i = 0; i < nodes.length; i++) {
+            bind(nodes[i], value);
+        }
     });
     
-    var body = '';
-    tr.pipe(concat(function (err, src) { body = src }));
-    tr.end(html);
-    return {
-        outerHTML: body,
-        innerHTML: body
-    };
+    return div;
 };
 
-function shallowCopy (obj) {
-    var res = {};
-    Object.keys(obj).forEach(function (key) {
-        res[key] = obj[key];
-    });
+function bind(node, value) {
+    if (isElement(value)) {
+        node.innerHTML = '';
+        node.appendChild(value);
+    }
+    else if (value && typeof value === 'object') {
+        forEach(objectKeys(value), function (key) {
+            if (key === '_text') {
+                setText(node, value[key]);
+            }
+            else if (key === '_html' && isElement(value[key])) {
+                node.innerHTML = '';
+                node.appendChild(value[key]);
+            }
+            else if (key === '_html') {
+                node.innerHTML = value[key];
+            }
+            else node.setAttribute(key, value[key]);
+        });
+    }
+    else setText(node, value);
+}
+
+function forEach(xs, f) {
+    if (xs.forEach) return xs.forEach(f);
+    for (var i = 0; i < xs.length; i++) f(xs[i], i)
+}
+
+var objectKeys = Object.keys || function (obj) {
+    var res = [];
+    for (var key in obj) res.push(key);
     return res;
+};
+
+function isElement (e) {
+    return e && typeof e === 'object' && e.childNodes
+        && typeof e.appendChild === 'function'
+        || typeof e.appendChild === 'object'
+    ;
+}
+
+function setText (e, s) {
+    e.innerHTML = '';
+    var txt = document.createTextNode(s);
+    e.appendChild(txt);
 }
