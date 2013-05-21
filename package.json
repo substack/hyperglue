@@ -7,7 +7,8 @@
     "dependencies": {
         "trumpet": "~0.3.4",
         "ent": "~0.0.5",
-        "concat-stream": "~0.1.1"
+        "concat-stream": "~0.1.1",
+        "domify": "git://github.com/component/domify#227d808ccd56abba105a719f54dd4dc9e76ffc59"
     },
     "devDependencies": {
         "tape": "~0.3.3",
