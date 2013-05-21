@@ -28,7 +28,9 @@ module.exports = function (html, params) {
             else if (typeof val === 'object') {
                 var copy = shallowCopy(val);
                 Object.keys(node.attributes).forEach(function (key) {
-                    copy[key] = node.attributes[key];
+                    if (val[key] === undefined) {
+                        copy[key] = node.attributes[key];
+                    }
                 });
                 Object.keys(copy).forEach(function (key) {
                     if (copy[key] === undefined || copy[key] === null) {
