@@ -10,22 +10,7 @@ module.exports = function (html, params) {
         tr.select(key, function (node) {
             if (!val) return;
             
-            if (typeof val === 'object' && val._html !== undefined) {
-                var copy = shallowCopy(val);
-                delete copy._html;
-                node.update(function (html) {
-                    return val._html;
-                }, Object.keys(copy).length ? copy : undefined);
-            }
-            else if (typeof val === 'object' && val._text !== undefined) {
-                var copy = shallowCopy(val);
-                delete copy._text;
-                node.update(
-                    ent.encode(String(val._text)),
-                    Object.keys(copy).length ? copy : undefined
-                );
-            }
-            else if (typeof val === 'object') {
+            if (typeof val === 'object') {
                 var copy = shallowCopy(val);
                 Object.keys(node.attributes).forEach(function (key) {
                     if (val[key] === undefined) {
@@ -37,6 +22,22 @@ module.exports = function (html, params) {
                         delete copy[key];
                     }
                 });
+            }
+            
+            if (typeof val === 'object' && val._html !== undefined) {
+                delete copy._html;
+                node.update(function (html) {
+                    return val._html;
+                }, Object.keys(copy).length ? copy : undefined);
+            }
+            else if (typeof val === 'object' && val._text !== undefined) {
+                delete copy._text;
+                node.update(
+                    ent.encode(String(val._text)),
+                    Object.keys(copy).length ? copy : undefined
+                );
+            }
+            else if (typeof val === 'object') {
                 node.update(String, copy);
             }
             else {
