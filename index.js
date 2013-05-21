@@ -4,7 +4,7 @@ var concat = require('concat-stream');
 
 module.exports = function (html, params) {
     var tr = trumpet();
-    Object.keys(params).forEach(function (key) {
+    Object.keys(params || {}).forEach(function (key) {
         var val = params[key];
         
         tr.select(key, function (node) {
