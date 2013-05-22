@@ -4,7 +4,7 @@ var query = require('queryselector');
 module.exports = function (src, updates) {
     if (!updates) updates = {};
 
-    var dom = typeof dom === 'object'
+    var dom = typeof src === 'object'
         ? src
         : domify(src)
     ;
