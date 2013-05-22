@@ -7,7 +7,9 @@
     "dependencies": {
         "trumpet": "~0.3.4",
         "ent": "~0.0.5",
-        "concat-stream": "~0.1.1"
+        "concat-stream": "~0.1.1",
+        "domify": "~0.2.0",
+        "queryselector": "~0.1.0"
     },
     "devDependencies": {
         "tape": "~0.3.3",

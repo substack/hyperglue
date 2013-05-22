@@ -1,27 +1,29 @@
+var domify = require('domify');
+var query = require('queryselector');
+
 module.exports = function (src, updates) {
     if (!updates) updates = {};
 
-    var div = src;
-    if (typeof div !== 'object') {
-        div = document.createElement('div');
-        div.innerHTML = src.replace(/^\s+|\s+$/g, '');
-    }
+    var dom = typeof src === 'object'
+        ? src
+        : domify(src)
+    ;
 
     forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
-        var nodes = div.querySelectorAll(selector);
-        if (nodes.length === 0) return;
-        for (var i = 0; i < nodes.length; i++) {
-            bind(nodes[i], value);
-        }
+        forEach(dom, function (d) {
+            var nodes = query.all(d, selector);
+            if (nodes.length === 0) return;
+            for (var i = 0; i < nodes.length; i++) {
+                bind(nodes[i], value);
+            }
+        });
     });
 
-    if (div.childNodes.length === 1
-    && div.childNodes[0] && div.childNodes[0].constructor
-    && div.childNodes[0].constructor.name !== 'Text') {
-        div = div.childNodes[0];
-    }
-    return div;
+    return dom.length === 1
+        ? dom[0]
+        : dom
+    ;
 };
 
 function bind(node, value) {
