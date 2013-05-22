@@ -1,23 +1,29 @@
-domify = require('domify');
+var domify = require('domify');
+var query = require('queryselector');
 
 module.exports = function (src, updates) {
     if (!updates) updates = {};
 
     var dom = typeof dom === 'object'
         ? src
-        : domify(src)[0]
+        : domify(src)
     ;
 
     forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
-        var nodes = dom.querySelectorAll(selector);
-        if (nodes.length === 0) return;
-        for (var i = 0; i < nodes.length; i++) {
-            bind(nodes[i], value);
-        }
+        forEach(dom, function (d) {
+            var nodes = query.all(d, selector);
+            if (nodes.length === 0) return;
+            for (var i = 0; i < nodes.length; i++) {
+                bind(nodes[i], value);
+            }
+        });
     });
 
-    return dom;
+    return dom.length === 1
+        ? dom[0]
+        : dom
+    ;
 };
 
 function bind(node, value) {
