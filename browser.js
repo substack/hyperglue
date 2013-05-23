@@ -5,7 +5,7 @@ module.exports = function (src, updates) {
     if (!updates) updates = {};
 
     var dom = typeof src === 'object'
-        ? src
+        ? [src]
         : domify(src)
     ;
 
