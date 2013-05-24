@@ -1,11 +1,11 @@
 {
     "name": "hyperglue",
-    "version": "0.2.8",
+    "version": "0.3.0",
     "description": "update html elements by mapping query selectors to attributes, text, and hypertext",
     "browser": "browser.js",
     "main": "index.js",
     "dependencies": {
-        "trumpet": "~0.3.4",
+        "trumpet": "~0.4.0",
         "ent": "~0.0.5",
         "concat-stream": "~0.1.1",
         "domify": "~0.2.0",
