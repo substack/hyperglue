@@ -35,7 +35,7 @@ function bind (node, value) {
     else if (isArray(value)) {
         for (var i = 0; i < value.length; i++) {
             var e = hyperglue(node.cloneNode(true), value[i]);
-            node.parentNode.appendChild(e);
+            node.parentNode.insertBefore(e, node);
         }
         node.parentNode.removeChild(node);
     }
