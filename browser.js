@@ -1,14 +1,15 @@
 var domify = require('domify');
 var query = require('queryselector');
 
-module.exports = function (src, updates) {
+module.exports = hyperglue;
+function hyperglue (src, updates) {
     if (!updates) updates = {};
-
+    
     var dom = typeof src === 'object'
-        ? [src]
+        ? [ src ]
         : domify(src)
     ;
-
+    
     forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
         forEach(dom, function (d) {
@@ -19,17 +20,24 @@ module.exports = function (src, updates) {
             }
         });
     });
-
+    
     return dom.length === 1
         ? dom[0]
         : dom
     ;
 };
 
-function bind(node, value) {
+function bind (node, value) {
     if (isElement(value)) {
         node.innerHTML = '';
         node.appendChild(value);
+    }
+    else if (isArray(value)) {
+        for (var i = 0; i < value.length; i++) {
+            var e = hyperglue(node.cloneNode(true), value[i]);
+            node.parentNode.appendChild(e);
+        }
+        node.parentNode.removeChild(node);
     }
     else if (value && typeof value === 'object') {
         forEach(objectKeys(value), function (key) {
@@ -66,6 +74,10 @@ function isElement (e) {
         || typeof e.appendChild === 'object')
     ;
 }
+
+var isArray = Array.isArray || function (xs) {
+    return Object.prototype.toString.call(xs) === '[object Array]';
+};
 
 function setText (e, s) {
     e.innerHTML = '';

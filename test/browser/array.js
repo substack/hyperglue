@@ -9,7 +9,7 @@ var html = [
     '</div>',
     '<b>ahoy!</b>',
     '</div>'
-].join('\n');
+].join('');
 
 var expected = [
     '<div id="rows">',
@@ -27,7 +27,7 @@ var expected = [
     '</div>',
     '<b>ahoy!</b>',
     '</div>'
-].join('\n');
+].join('');
 
 test('array', function (t) {
     t.plan(1);
@@ -40,5 +40,13 @@ test('array', function (t) {
         ]
     }).outerHTML;
     
-    t.equal(res, expected);
+    t.equal(fudge(res), fudge(expected));
 });
+
+function fudge (html) {
+    return html.toLowerCase()
+        .replace(/\r\n/g, '\n')
+        .replace(/"/g, '')
+        .replace(/\n/g, '')
+    ;
+}
