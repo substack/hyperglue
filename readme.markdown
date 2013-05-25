@@ -107,6 +107,52 @@ console.log(createArticle({
 }).innerHTML);
 ```
 
+## arrays
+
+You can also duplicate existing elements in order to render arrays of results:
+
+``` js
+var hyperglue = require('hyperglue');
+
+var html = [
+    '<div id="rows">',
+    '<div class="row">',
+    '<span class="name"></span>',
+    '<span class="message"></span>',
+    '</div>',
+    '<b>ahoy!</b>',
+    '</div>'
+].join('\n');
+
+console.log(hyperglue(html, {
+    '.row': [
+        { '.name': 'T-REX', '.message': 'RAWR' },
+        { '.name': 'robot', '.message': 'beep boop' },
+        { '.name': 'Dr X', '.message': 'mwahaha' }
+    ]
+}).outerHTML);
+```
+
+output:
+
+``` html
+<div id="rows">
+<div class="row">
+<span class="name">T-REX</span>
+<span class="message">RAWR</span>
+</div>
+<div class="row">
+<span class="name">robot</span>
+<span class="message">beep boop</span>
+</div>
+<div class="row">
+<span class="name">Dr X</span>
+<span class="message">mwahaha</span>
+</div>
+<b>ahoy!</b>
+</div>
+```
+
 # methods
 
 ``` js
