@@ -175,6 +175,10 @@ content of the matching elements to that value.
 When the target values are html elements, replace the inner content at the
 selected element with a clone of the value.
 
+For target values of arrays, recursively apply `hyperglue(node.cloneNode(),
+value)` for each matching element in the array and then remove the original
+node. This feature makes rendering arrays of content super simple.
+
 If the target values in `updates` are non-html element objects, update the
 attributes on all matching elements with the keys in the target values. Use
 `'_text'` to set the text content and `'_html'` to set the innerHTML in object
