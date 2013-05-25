@@ -9,7 +9,7 @@ var html = [
     '</div>',
     '<b>ahoy!</b>',
     '</div>'
-].join('');
+].join('\n');
 
 var expected = [
     '<div id="rows">',
@@ -27,7 +27,7 @@ var expected = [
     '</div>',
     '<b>ahoy!</b>',
     '</div>'
-].join('');
+].join('\n');
 
 test('array', function (t) {
     t.plan(1);

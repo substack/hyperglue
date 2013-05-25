@@ -2,7 +2,8 @@ var trumpet = require('trumpet');
 var ent = require('ent');
 var concat = require('concat-stream');
 
-module.exports = function (html, params) {
+module.exports = hyperglue;
+function hyperglue (html, params) {
     var tr = trumpet();
     Object.keys(params).forEach(function (key) {
         var val = params[key];
@@ -11,12 +12,13 @@ module.exports = function (html, params) {
             if (!val) return;
             
             if (Array.isArray(val)) {
-                // ...
+                node.replace(function (html_) {
+                    return bulkUpdate(html_, val);
+                });
             }
             else node.update.apply(node, makeUpdate(node, val));
         });
     });
-    
     
     var body = '';
     tr.pipe(concat(function (err, src) { body = src }));
@@ -25,7 +27,13 @@ module.exports = function (html, params) {
         outerHTML: body,
         innerHTML: body
     };
-};
+}
+
+function bulkUpdate (html, rows) {
+    return rows.map(function (row) {
+        return hyperglue(html, row).outerHTML;
+    }).join('\n');
+}
 
 function makeUpdate (node, val) {
     if (typeof val === 'object') {
