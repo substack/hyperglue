@@ -182,7 +182,7 @@ node. This feature makes rendering arrays of content super simple.
 If the target values in `updates` are non-html element objects, update the
 attributes on all matching elements with the keys in the target values. Use
 `'_text'` to set the text content and `'_html'` to set the innerHTML in object
-form. If `'_html'`` is an HTML element, replace the inner content at the
+form. If `'_html'` is an HTML element, replace the inner content at the
 selector elements with a clone of the `'_html'` value.
 
 # install
