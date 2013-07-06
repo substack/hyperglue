@@ -17,7 +17,7 @@ function hyperglue (html, params) {
         var elem = tr.select(key);
         
         if (Array.isArray(val)) {
-            var s = elem.createStream();
+            var s = elem.createStream({ outer: true });
             s.pipe(concat(function (body) {
                 val.forEach(function (x) {
                     s.write(hyperglue(body, x).outerHTML);
