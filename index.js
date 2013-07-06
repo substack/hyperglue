@@ -7,75 +7,46 @@ function hyperglue (html, params) {
     var tr = trumpet();
     Object.keys(params).forEach(function (key) {
         var val = params[key];
+        if (!val) return;
+        if (typeof val === 'string') val = { _text: val };
+        else if (Buffer.isBuffer(val)) val = { _text: val.toString('utf8') };
+        else if (typeof val !== 'object') val = { _text: String(val) };
         
-        tr.select(key, function (node) {
-            if (!val) return;
-            
-            if (Array.isArray(val)) {
-                node.replace(function (html_) {
-                    return bulkUpdate(html_, val);
+        if (Buffer.isBuffer(val._text)) val._text = val._text.toString('utf8');
+        
+        var elem = tr.select(key);
+        
+        if (Array.isArray(val)) {
+            var s = elem.createStream();
+            s.pipe(concat(function (body) {
+                val.forEach(function (x) {
+                    s.write(hyperglue(body, x).outerHTML);
                 });
+                s.end();
+            }));
+        }
+        else {
+            Object.keys(val).forEach(function (k) {
+                if (k === '_text' || k === '_html') return;
+                if (val[k] === undefined) {
+                    elem.removeAttribute(k);
+                }
+                else elem.setAttribute(k, val[k]);
+            });
+            if (val._text) {
+                elem.createWriteStream().end(ent.encode(val._text));
             }
-            else node.update.apply(node, makeUpdate(node, val));
-        });
+            else if (val._html) {
+                elem.createWriteStream().end(val._html);
+            }
+        }
     });
     
     var body = '';
-    tr.pipe(concat(function (err, src) { body = src }));
+    tr.pipe(concat(function (src) { body = src.toString('utf8') }));
     tr.end(html);
     return {
         outerHTML: body,
         innerHTML: body
     };
-}
-
-function bulkUpdate (html, rows) {
-    return rows.map(function (row) {
-        return hyperglue(html, row).outerHTML;
-    }).join('\n');
-}
-
-function makeUpdate (node, val) {
-    if (typeof val === 'object') {
-        var copy = shallowCopy(val);
-        Object.keys(node.attributes).forEach(function (key) {
-            if (val[key] === undefined) {
-                copy[key] = node.attributes[key];
-            }
-        });
-        Object.keys(copy).forEach(function (key) {
-            if (copy[key] === undefined || copy[key] === null) {
-                delete copy[key];
-            }
-        });
-    }
-    
-    if (typeof val === 'object' && val._html !== undefined) {
-        delete copy._html;
-        return [
-            function (html) { return val._html },
-            Object.keys(copy).length ? copy : undefined
-        ];
-    }
-    else if (typeof val === 'object' && val._text !== undefined) {
-        delete copy._text;
-        return [
-            ent.encode(String(val._text)),
-            Object.keys(copy).length ? copy : undefined
-        ];
-    }
-    else if (typeof val === 'object') {
-        return [ String, copy ];
-    }
-    else {
-        return [ ent.encode(String(val)) ];
-    }
-}
-
-function shallowCopy (obj) {
-    var res = {};
-    Object.keys(obj).forEach(function (key) {
-        res[key] = obj[key];
-    });
-    return res;
 }

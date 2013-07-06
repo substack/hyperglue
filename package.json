@@ -5,9 +5,9 @@
     "browser": "browser.js",
     "main": "index.js",
     "dependencies": {
-        "trumpet": "~0.4.0",
+        "trumpet": "~1.3.0",
         "ent": "~0.0.5",
-        "concat-stream": "~0.1.1",
+        "concat-stream": "~1.0.0",
         "domify": "~0.2.0",
         "queryselector": "~0.1.0"
     },
