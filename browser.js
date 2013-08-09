@@ -13,7 +13,7 @@ function hyperglue (src, updates) {
     forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
         forEach(dom, function (d) {
-            var nodes = query.all(d, selector);
+            var nodes = d.querySelectorAll(selector);
             if (nodes.length === 0) return;
             for (var i = 0; i < nodes.length; i++) {
                 bind(nodes[i], value);
@@ -25,7 +25,7 @@ function hyperglue (src, updates) {
         ? dom[0]
         : dom
     ;
-};
+}
 
 function bind (node, value) {
     if (isElement(value)) {
@@ -81,6 +81,6 @@ var isArray = Array.isArray || function (xs) {
 
 function setText (e, s) {
     e.innerHTML = '';
-    var txt = document.createTextNode(s);
+    var txt = document.createTextNode(String(s));
     e.appendChild(txt);
 }
