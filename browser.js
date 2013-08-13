@@ -1,5 +1,4 @@
 var domify = require('domify');
-var query = require('queryselector');
 
 module.exports = hyperglue;
 function hyperglue (src, updates) {
