@@ -43,7 +43,9 @@ function hyperglue (html, params) {
     });
     
     var body = '';
-    tr.pipe(concat(function (src) { body = src.toString('utf8') }));
+    tr.pipe(concat(function (src) {
+        body = (src || '').toString('utf8');
+    }));
     tr.end(html);
     return {
         outerHTML: body,
