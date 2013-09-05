@@ -12,10 +12,16 @@ function hyperglue (src, updates) {
     forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
         forEach(dom, function (d) {
-            var nodes = d.querySelectorAll(selector);
-            if (nodes.length === 0) return;
-            for (var i = 0; i < nodes.length; i++) {
-                bind(nodes[i], value);
+            if (/:all$/.test(selector)) {
+                var nodes = d.querySelectorAll(selector);
+                if (nodes.length === 0) return;
+                for (var i = 0; i < nodes.length; i++) {
+                    bind(nodes[i], value);
+                }
+            }
+            else {
+                var elem = d.querySelector(selector);
+                if (elem) bind(elem, value);
             }
         });
     });
