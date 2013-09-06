@@ -14,9 +14,12 @@ function hyperglue (html, params) {
         
         if (Buffer.isBuffer(val._text)) val._text = val._text.toString('utf8');
         
-        if (/:first$/.test(key)) {
+        if (key === ':first') {
+            each(tr.select('*'), val);
+        }
+        else if (/:first$/.test(key)) {
             var k = key.replace(/:first$/, '');
-            each(tr.select(key), val);
+            each(tr.select(k), val);
         }
         else {
             tr.selectAll(key, function (elem) {
