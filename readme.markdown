@@ -169,6 +169,10 @@ an `innerHTML` property populated with the string contents of the replacement.
 `updates` should have [query selectors](http://www.w3.org/TR/CSS2/selector.html)
 as keys and target strings, numbers, or objects as values.
 
+Each `update` query selector can have the special pseudo-class `:first` which
+causes the selector to only match the first value like `querySelector()` instead
+of all the matching elements like `querySelectorAll()`, the default.
+
 If the target values in `updates` are strings or numbers, set the inner text
 content of the matching elements to that value.
 
