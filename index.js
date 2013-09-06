@@ -14,8 +14,29 @@ function hyperglue (html, params) {
         
         if (Buffer.isBuffer(val._text)) val._text = val._text.toString('utf8');
         
-        var elem = tr.select(key);
-        
+        if (/:all$/.test(key)) {
+            var k = key.replace(/:all$/, '');
+            each(tr.select(k), val);
+            tr.selectAll(k, function (elem) {
+                each(tr.select(k), val);
+            });
+        }
+        else {
+            each(tr.select(key), val);
+        }
+    });
+    
+    var body = '';
+    tr.pipe(concat(function (src) {
+        body = (src || '').toString('utf8');
+    }));
+    tr.end(html);
+    return {
+        outerHTML: body,
+        innerHTML: body
+    };
+    
+    function each (elem, val) {
         if (Array.isArray(val)) {
             var s = elem.createStream({ outer: true });
             s.pipe(concat(function (body) {
@@ -40,15 +61,5 @@ function hyperglue (html, params) {
                 elem.createWriteStream().end(val._html);
             }
         }
-    });
-    
-    var body = '';
-    tr.pipe(concat(function (src) {
-        body = (src || '').toString('utf8');
-    }));
-    tr.end(html);
-    return {
-        outerHTML: body,
-        innerHTML: body
-    };
+    }
 }
