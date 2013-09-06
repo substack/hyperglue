@@ -14,15 +14,14 @@ function hyperglue (html, params) {
         
         if (Buffer.isBuffer(val._text)) val._text = val._text.toString('utf8');
         
-        if (/:all$/.test(key)) {
-            var k = key.replace(/:all$/, '');
-            each(tr.select(k), val);
-            tr.selectAll(k, function (elem) {
-                each(tr.select(k), val);
-            });
+        if (/:first$/.test(key)) {
+            var k = key.replace(/:first$/, '');
+            each(tr.select(key), val);
         }
         else {
-            each(tr.select(key), val);
+            tr.selectAll(key, function (elem) {
+                each(elem, val);
+            });
         }
     });
     
