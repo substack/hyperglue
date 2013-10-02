@@ -16,7 +16,11 @@ test('add attr', function (t) {
 });
 
 test('remove attr', function (t) {
-    t.plan(1);
+    t.plan(2);
+    
     var res = hyperglue(html, { 'img.a': { src: undefined } }).innerHTML;
+    t.equal(res, '<img class="a">');
+    
+    res = hyperglue(html, { 'img.a': { src: null } }).innerHTML;
     t.equal(res, '<img class="a">');
 });
