@@ -1,39 +1,55 @@
 var domify = require('domify');
+var util = require('util');
 
 module.exports = hyperglue;
 function hyperglue (src, updates) {
     if (!updates) updates = {};
     
-    var dom = typeof src === 'object'
-        ? [ src ]
-        : domify(src)
-    ;
-    
+    var ob = typeof src === 'object';
+    var dom = ob
+            ? [ src ]
+            : domify("<div>"+src+"</div>");
+    var returnDom = [];
+    var html = "";
+
     forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
-        forEach(dom, function (d) {
-            if (selector === ':first') {
-                bind(d, value);
+        if (selector === ':first') {
+            bind(ob ? dom[0] : dom[0].firstChild, value);
+        }
+        else if (/:first$/.test(selector)) {
+            var k = selector.replace(/:first$/, '');
+            var elem = dom[0].querySelector(k);
+            if (elem) bind(elem, value);
+        }
+        else{
+            var nodes = dom[0].querySelectorAll(selector);
+            if (nodes.length === 0) return;
+            for (var i = 0; i < nodes.length; i++) {
+                bind(nodes[i], value);
             }
-            else if (/:first$/.test(selector)) {
-                var k = selector.replace(/:first$/, '');
-                var elem = d.querySelector(k);
-                if (elem) bind(elem, value);
-            }
-            else {
-                var nodes = d.querySelectorAll(selector);
-                if (nodes.length === 0) return;
-                for (var i = 0; i < nodes.length; i++) {
-                    bind(nodes[i], value);
-                }
-            }
-        });
+        }
     });
-    
-    return dom.length === 1
-        ? dom[0]
-        : dom
-    ;
+
+    if( ob ){
+        return dom.length === 1 ? dom[0] : dom;
+    }else{
+        if (dom[0].childElementCount === 1)
+            return dom[0].removeChild(dom[0].firstChild);
+
+        while(dom[0].firstChild){
+            html += dom[0].firstChild.outerHTML;
+            returnDom.push(dom[0].removeChild(dom[0].firstChild));
+        }
+
+        if (returnDom.length === 1) {
+            return returnDom[0];
+        }else{
+            returnDom.innerHTML = returnDom.outerHTML = html;
+            returnDom.appendTo = function(dest){ forEach(this, function(src){ dest.appendChild( src ) } ); return this; };
+            return returnDom;
+        };
+    }
 }
 
 function bind (node, value) {

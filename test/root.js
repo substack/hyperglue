@@ -2,7 +2,7 @@ var hyperglue = require('../');
 var test = require('tape');
 
 test('rootElements', function (t) {
-    t.plan(4);
+    t.plan(3);
     
     var res;
 
@@ -18,8 +18,5 @@ test('rootElements', function (t) {
     res = hyperglue('<div class="hello"></div><div class="hello"></div>', { '.hello': 'world' }).outerHTML;
     t.equal(res, '<div class="hello">world</div><div class="hello">world</div>');
 
-    //multiple non-root element, by class
-    res = hyperglue('<div><div class="hello"></div><div class="hello"></div></div>', { '.hello': 'world' }).outerHTML;
-    t.equal(res, '<div><div class="hello">world</div><div class="hello">world</div></div>');
 
 });
