@@ -1,5 +1,4 @@
 var domify = require('domify');
-var util = require('util');
 
 module.exports = hyperglue;
 function hyperglue (src, updates) {
@@ -42,13 +41,9 @@ function hyperglue (src, updates) {
             returnDom.push(dom[0].removeChild(dom[0].firstChild));
         }
 
-        if (returnDom.length === 1) {
-            return returnDom[0];
-        }else{
-            returnDom.innerHTML = returnDom.outerHTML = html;
-            returnDom.appendTo = function(dest){ forEach(this, function(src){ dest.appendChild( src ) } ); return this; };
-            return returnDom;
-        };
+        returnDom.innerHTML = returnDom.outerHTML = html;
+        returnDom.appendTo = function(dest){ forEach(this, function(src){ dest.appendChild( src ) } ); return this; };
+        return returnDom;
     }
 }
 
