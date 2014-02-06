@@ -109,6 +109,9 @@ function setText (e, s) {
 function appendTo(dest) {
     var self = this;
     if(!isArray(self)) self = [self];
-    forEach(self, function(src){ dest.appendChild( src ) } ); 
+    forEach(self, function(src){ 
+        if(dest.appendChild) dest.appendChild( src ) 
+        else if (dest.append) dest.append ( src )
+    } ); 
     return this;
 }

@@ -4,7 +4,7 @@ var test = require('tape');
 test('rootElements', function (t) {
     t.plan(7);
     
-    var res;
+    var res, div;
 
     //single root element, by class
     res = hyperglue('<div class="hello"></div>', { '.hello': 'world' }).outerHTML;
@@ -27,13 +27,13 @@ test('rootElements', function (t) {
     t.equal(res, '<div><div class="hello">world</div><div class="hello">world</div></div>');
 
     //single root element, by class, appendTo
-    var div = document.createElement("div");
+    div = document.createElement("div");
     hyperglue('<span class="hello"></span>', { '.hello': 'world' }).appendTo(div);
     res = div.outerHTML;
     t.equal(res, '<div><span class="hello">world</span></div>');
 
     //multiple root element, by class, appendTo
-    var div = document.createElement("div");
+    div = document.createElement("div");
     hyperglue('<span class="hello"></span><span class="hello"></span>', { '.hello': 'world' }).appendTo(div);
     res = div.outerHTML;
     t.equal(res, '<div><span class="hello">world</span><span class="hello">world</span></div>');
