@@ -107,6 +107,8 @@ function setText (e, s) {
 }
 
 function appendTo(dest) {
-    forEach(this, function(src){ dest.appendChild( src ) } ); 
+    var self = this;
+    if(!isArray(self)) self = [self];
+    forEach(self, function(src){ dest.appendChild( src ) } ); 
     return this;
 }
