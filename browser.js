@@ -33,16 +33,17 @@ function hyperglue (src, updates) {
     if( ob ){
         return dom.length === 1 ? dom[0] : dom;
     }else{
-        if (dom[0].childElementCount === 1)
-            return dom[0].removeChild(dom[0].firstChild);
+        if (dom[0].childElementCount === 1){
+            returnDom = dom[0].removeChild(dom[0].firstChild);
+        }else{
+            returnDom.innerHTML = returnDom.outerHTML = "";
 
-        while(dom[0].firstChild){
-            html += dom[0].firstChild.outerHTML;
-            returnDom.push(dom[0].removeChild(dom[0].firstChild));
+            while(dom[0].firstChild){
+                returnDom.innerHTML += returnDom.outerHTML += dom[0].firstChild.outerHTML;
+                returnDom.push(dom[0].removeChild(dom[0].firstChild));
+            }            
         }
-
-        returnDom.innerHTML = returnDom.outerHTML = html;
-        returnDom.appendTo = function(dest){ forEach(this, function(src){ dest.appendChild( src ) } ); return this; };
+        returnDom.appendTo = appendTo;
         return returnDom;
     }
 }
@@ -103,4 +104,9 @@ function setText (e, s) {
     e.innerHTML = '';
     var txt = document.createTextNode(String(s));
     e.appendChild(txt);
+}
+
+function appendTo(dest) {
+    forEach(this, function(src){ dest.appendChild( src ) } ); 
+    return this;
 }
