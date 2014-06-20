@@ -1,4 +1,4 @@
-var test = require('tap').test;
+var test = require('tape');
 var hyperglue = require('../');
 
 var html = '<div><span>x</span><span>y</span></div><b></b>';
