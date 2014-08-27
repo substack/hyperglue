@@ -11,7 +11,7 @@
         "domify": "~0.2.0"
     },
     "devDependencies": {
-        "tape": "~0.3.3",
+        "tape": "~2.14.0",
         "tap": "~0.4.0"
     },
     "scripts": {
