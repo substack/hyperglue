@@ -1,43 +1,42 @@
 {
-    "name": "hyperglue",
-    "version": "1.3.1",
-    "description": "update html elements by mapping query selectors to attributes, text, and hypertext",
-    "browser": "browser.js",
-    "main": "index.js",
-    "dependencies": {
-        "trumpet": "1.6.3",
-        "ent": "~0.0.5",
-        "concat-stream": "~1.0.0",
-        "domify": "~0.2.0"
-    },
-    "devDependencies": {
-        "tape": "~0.3.3",
-        "tap": "~0.4.0"
-    },
-    "scripts": {
-        "test": "tap test/*.js"
-    },
-    "testling": {
-        "files": "test/browser/*.js",
-        "browsers": [
-            "ie8", "ie9", "ie10", "chrome/20", "firefox/17",
-            "safari/5.1", "opera/12"
-        ]
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/substack/hyperglue.git"
-    },
-    "homepage": "https://github.com/substack/hyperglue",
-    "keywords": [
-        "browser",
-        "html",
-        "querySelector"
-    ],
-    "author": {
-        "name": "James Halliday",
-        "email": "mail@substack.net",
-        "url": "http://substack.net"
-    },
-    "license": "MIT"
+  "name": "hyperglue",
+  "version": "1.3.1",
+  "description": "update html elements by mapping query selectors to attributes, text, and hypertext",
+  "browser": "browser.js",
+  "main": "index.js",
+  "dependencies": {
+    "trumpet": "1.6.3",
+    "ent": "~0.0.5",
+    "concat-stream": "~1.0.0",
+    "domify": "~0.2.0"
+  },
+  "devDependencies": {
+    "tape": "^3.0.0"
+  },
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "testling": {
+    "files": "test/browser/*.js",
+    "browsers": [
+      "ie8", "ie9", "ie10", "chrome/20", "firefox/17",
+      "safari/5.1", "opera/12"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/substack/hyperglue.git"
+  },
+  "homepage": "https://github.com/substack/hyperglue",
+  "keywords": [
+    "browser",
+    "html",
+    "querySelector"
+  ],
+  "author": {
+    "name": "James Halliday",
+    "email": "mail@substack.net",
+    "url": "http://substack.net"
+  },
+  "license": "MIT"
 }
