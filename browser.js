@@ -1,27 +1,39 @@
 var domify = require('domify');
-
 module.exports = hyperglue;
+
+var outer = null;
+
 function hyperglue (src, updates) {
     if (!updates) updates = {};
     
-    var dom = typeof src === 'object'
-        ? [ src ]
-        : domify(src)
-    ;
+    var dom = typeof src === 'object' ? [ src ] : domify(src);
+    if (!outer) outer = document.createElement('div');
     
     forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
         forEach(dom, function (d) {
+            var appended = false;
             if (selector === ':first') {
                 bind(d, value);
             }
             else if (/:first$/.test(selector)) {
                 var k = selector.replace(/:first$/, '');
-                var elem = d.querySelector(k);
+                
+                if (!d.parentNode) {
+                    outer.appendChild(d);
+                    appended = true;
+                }
+                var elem = d.parentNode.querySelector(k);
+                if (appended) outer.removeChild(d);
                 if (elem) bind(elem, value);
             }
             else {
-                var nodes = d.querySelectorAll(selector);
+                if (!d.parentNode) {
+                    outer.appendChild(d);
+                    appended = true;
+                }
+                var nodes = d.parentNode.querySelectorAll(selector);
+                if (appended) outer.removeChild(d);
                 if (nodes.length === 0) return;
                 for (var i = 0; i < nodes.length; i++) {
                     bind(nodes[i], value);
@@ -29,11 +41,7 @@ function hyperglue (src, updates) {
             }
         });
     });
-    
-    return dom.length === 1
-        ? dom[0]
-        : dom
-    ;
+    return dom.length === 1 ? dom[0] : dom;
 }
 
 function bind (node, value) {
