@@ -12,28 +12,31 @@ function hyperglue (src, updates) {
     forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
         forEach(dom, function (d) {
-            var appended = false;
+            var parentNode = d.parentNode;
+            
             if (selector === ':first') {
                 bind(d, value);
             }
             else if (/:first$/.test(selector)) {
                 var k = selector.replace(/:first$/, '');
+                if (parentNode) parentNode.removeChild(d);
+                outer.appendChild(d);
                 
-                if (!d.parentNode) {
-                    outer.appendChild(d);
-                    appended = true;
-                }
-                var elem = d.parentNode.querySelector(k);
-                if (appended) outer.removeChild(d);
+                var elem = outer.querySelector(k);
+                outer.removeChild(d);
+                
+                if (parentNode) parentNode.appendChild(d);
                 if (elem) bind(elem, value);
             }
             else {
-                if (!d.parentNode) {
-                    outer.appendChild(d);
-                    appended = true;
-                }
+                if (parentNode) parentNode.removeChild(d);
+                outer.appendChild(d);
+                
                 var nodes = d.parentNode.querySelectorAll(selector);
-                if (appended) outer.removeChild(d);
+                outer.removeChild(d);
+                
+                if (parentNode) parentNode.appendChild(d);
+                
                 if (nodes.length === 0) return;
                 for (var i = 0; i < nodes.length; i++) {
                     bind(nodes[i], value);
