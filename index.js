@@ -5,7 +5,7 @@ var concat = require('concat-stream');
 module.exports = hyperglue;
 function hyperglue (html, params) {
     var tr = trumpet();
-    Object.keys(params).forEach(function (key) {
+    Object.keys(params || {}).forEach(function (key) {
         var val = params[key];
         if (!val) return;
         if (typeof val === 'string') val = { _text: val };
