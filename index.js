@@ -51,7 +51,7 @@ function hyperglue (html, params) {
         else {
             Object.keys(val).forEach(function (k) {
                 if (k === '_text' || k === '_html') return;
-                if (val[k] === undefined) {
+                if (val[k] === undefined || val[k] === null) {
                     elem.removeAttribute(k);
                 }
                 else elem.setAttribute(k, val[k]);
