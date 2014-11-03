@@ -16,8 +16,12 @@ function createArticle (doc) {
         '.commit': doc.commit,
         '.author': doc.author,
         '.date': doc.date,
-        '.body': { _html: doc.body }
+        '.body': { _html: content }
     });
+
+    function content () {
+      return doc.body;  
+    }
 }
 
 test(function (t) {

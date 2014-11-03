@@ -5,15 +5,15 @@ var outer = null;
 
 function hyperglue (src, updates) {
     if (!updates) updates = {};
-    
+
     var dom = typeof src === 'object' ? [ src ] : domify(src);
     if (!outer) outer = document.createElement('div');
-    
+
     forEach(objectKeys(updates), function (selector) {
         var value = updates[selector];
         forEach(dom, function (d) {
             var parentNode = d.parentNode;
-            
+
             if (selector === ':first') {
                 bind(d, value);
             }
@@ -21,22 +21,22 @@ function hyperglue (src, updates) {
                 var k = selector.replace(/:first$/, '');
                 if (parentNode) parentNode.removeChild(d);
                 outer.appendChild(d);
-                
+
                 var elem = outer.querySelector(k);
                 outer.removeChild(d);
-                
+
                 if (parentNode) parentNode.appendChild(d);
                 if (elem) bind(elem, value);
             }
             else {
                 if (parentNode) parentNode.removeChild(d);
                 outer.appendChild(d);
-                
+
                 var nodes = d.parentNode.querySelectorAll(selector);
                 outer.removeChild(d);
-                
+
                 if (parentNode) parentNode.appendChild(d);
-                
+
                 if (nodes.length === 0) return;
                 for (var i = 0; i < nodes.length; i++) {
                     bind(nodes[i], value);
@@ -67,6 +67,9 @@ function bind (node, value) {
             else if (key === '_html' && isElement(value[key])) {
                 node.innerHTML = '';
                 node.appendChild(value[key]);
+            }
+            else if (key === '_html' && typeof value[key] === 'function') {
+                node.innerHTML = value[key]();
             }
             else if (key === '_html') {
                 node.innerHTML = value[key];
