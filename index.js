@@ -30,9 +30,11 @@ function hyperglue (html, params) {
 
     var body = '';
     tr.pipe(concat(function (src) {
-        body = (src || '').toString('utf8');
+        src || (src = '');
+        body = src.offset ? src.toString('utf8') : String.fromCharCode.apply(null, new Uint16Array(src));
     }));
     tr.end(html);
+
     return {
         outerHTML: body,
         innerHTML: body
