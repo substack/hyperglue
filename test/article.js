@@ -16,15 +16,19 @@ function createArticle (doc) {
         '.commit': doc.commit,
         '.author': doc.author,
         '.date': doc.date,
-        '.body': { _html: doc.body }
+        '.body': { _html: content }
     });
+
+  function content () {
+    return doc.body;
+  }
 }
 
 test(function (t) {
     t.plan(1);
-    
+
     var src = '';
-    
+
     src += createArticle({
         file: 'grobot.markdown',
         author: 'James Halliday',
@@ -33,7 +37,7 @@ test(function (t) {
         commit: '81c62aa62b6770a2f6bdf6865d393daf05930b4a',
         body: '<h1>robots!</h1>\n\n<p>Pretty great basically.</p>'
     }).innerHTML;
-    
+
     src += createArticle({
         file: 'test.markdown',
         author: 'James Halliday',
@@ -42,7 +46,7 @@ test(function (t) {
         commit: '2a516000d239bbfcf7cdbb4b5acf09486bdf9586',
         body: '<h1>title text</h1>\n\n<p>beep boop.</p>\n\n<p><em>rawr</em></p>'
     }).innerHTML;
-    
+
     compare(expected, { innerHTML: src }, function (a, b) {
         t.equal(a, b);
     });

@@ -29,7 +29,7 @@ var expected = [
 
 test('array', function (t) {
     t.plan(1);
-    
+
     var res = hyperglue(html, {
         '.row': [
             { '.name': 'T-REX', '.message': 'RAWR' },
@@ -37,6 +37,6 @@ test('array', function (t) {
             { '.name': 'Dr X', '.message': 'mwahaha' }
         ]
     }).outerHTML;
-    
+
     t.equal(res, expected);
 });
