@@ -74,10 +74,10 @@ function bind (node, value) {
             else if (value[key] && typeof value[key] === 'object') {
                 var vk = value[key];
                 if (vk.append) {
-                    node.setAttribute(key, node.getAttribute(key) + vk);
+                    node.setAttribute(key, node.getAttribute(key) + vk.append);
                 }
                 else if (vk.prepend) {
-                    node.setAttribute(key, vk + node.getAttribute(key));
+                    node.setAttribute(key, vk.prepend + node.getAttribute(key));
                 }
             }
             else node.setAttribute(key, value[key]);
