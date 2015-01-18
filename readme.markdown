@@ -1,13 +1,15 @@
 # hyperglue
 
-update html elements by mapping query selectors to attributes, text, and
-hypertext
+update html elements in the browser by mapping query selectors to attributes,
+text, and hypertext
 
 [![browser support](http://ci.testling.com/substack/hyperglue.png)](http://ci.testling.com/substack/hyperglue)
 
 [![build status](https://secure.travis-ci.org/substack/hyperglue.png)](http://travis-ci.org/substack/hyperglue)
 
-This module works in both node and the browser.
+In node, use [hyperstream](https://npmjs.org/package/hyperstream)
+or [html-template](https://npmjs.org/package/html-template) to use the same
+object properties.
 
 # example
 
@@ -64,47 +66,6 @@ Then just do:
 
 ``` html
 <script src="bundle.js"></script>
-```
-
-## in node
-
-``` js
-var hyperglue = require('hyperglue');
-var fs = require('fs');
-var html = fs.readFileSync(__dirname + '/article.html');
-
-function createArticle (doc) {
-    var name = doc.title.replace(/[^A-Za-z0-9]+/g,'_');
-    return hyperglue(html, {
-        '.title a': {
-            name: name,
-            href: '#' + name,
-            _text: doc.title
-        },
-        '.commit': doc.commit,
-        '.author': doc.author,
-        '.date': doc.date,
-        '.body': { _html: doc.body }
-    });
-}
-
-console.log(createArticle({
-    file: 'grobot.markdown',
-    author: 'James Halliday',
-    date: 'Mon Dec 24 15:31:27 2012 -0800',
-    title: 'robots are pretty great',
-    commit: '81c62aa62b6770a2f6bdf6865d393daf05930b4a',
-    body: '<h1>robots!</h1>\n\n<p>Pretty great basically.</p>'
-}).innerHTML);
-
-console.log(createArticle({
-    file: 'test.markdown',
-    author: 'James Halliday',
-    date: 'Mon Dec 24 04:31:53 2012 -0800',
-    title: 'testing title',
-    commit: '2a516000d239bbfcf7cdbb4b5acf09486bdf9586',
-    body: '<h1>title text</h1>\n\n<p>beep boop.</p>\n\n<p><em>rawr</em></p>'
-}).innerHTML);
 ```
 
 ## arrays
