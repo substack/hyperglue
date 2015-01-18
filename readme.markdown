@@ -189,6 +189,9 @@ attributes on all matching elements with the keys in the target values. Use
 form. If `'_html'` is an HTML element, replace the inner content at the
 selector elements with a clone of the `'_html'` value.
 
+Instead of a text value for an attribute, you can also specify an object with
+`append` and `prepend` keys to append or prepend strings.
+
 # install
 
 With [npm](https://npmjs.org) do:

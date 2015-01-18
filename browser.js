@@ -71,6 +71,15 @@ function bind (node, value) {
             else if (key === '_html') {
                 node.innerHTML = value[key];
             }
+            else if (value[key] && typeof value[key] === 'object') {
+                var vk = value[key];
+                if (vk.append) {
+                    node.setAttribute(key, node.getAttribute(key) + vk);
+                }
+                else if (vk.prepend) {
+                    node.setAttribute(key, vk + node.getAttribute(key));
+                }
+            }
             else node.setAttribute(key, value[key]);
         });
     }
