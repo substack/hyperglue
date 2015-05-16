@@ -6,7 +6,7 @@
   "dependencies": {
     "concat-stream": "~1.0.0",
     "ent": "^2.2.0",
-    "trumpet": "1.6.3"
+    "trumpet": "^1.7.1"
   },
   "devDependencies": {
     "tape": "^3.0.0"
@@ -29,6 +29,5 @@
     "email": "mail@substack.net",
     "url": "http://substack.net"
   },
-  "license": "MIT",
-  "name": "htmlglue"
+  "license": "MIT"
 }

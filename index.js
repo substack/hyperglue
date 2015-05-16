@@ -2,8 +2,9 @@ var trumpet = require('trumpet');
 var ent = require('ent');
 var concat = require('concat-stream');
 
-module.exports = hyperglue;
-function hyperglue (html, params) {
+module.exports = htmlglue;
+
+function htmlglue (html, params) {
     var tr = trumpet();
     Object.keys(params).forEach(function (key) {
         var val = params[key];
@@ -45,7 +46,7 @@ function hyperglue (html, params) {
             var s = elem.createStream({ outer: true });
             s.pipe(concat(function (body) {
                 val.forEach(function (x) {
-                    s.write(hyperglue(body, x).outerHTML);
+                    s.write(htmlglue(body, x).outerHTML);
                 });
                 s.end();
             }));
