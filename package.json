@@ -1,13 +1,12 @@
 {
-  "name": "hyperglue",
-  "version": "1.3.3",
+  "name": "htmlglue",
+  "version": "0.0.0",
   "description": "update html elements by mapping query selectors to attributes, text, and hypertext",
   "main": "index.js",
   "dependencies": {
-    "trumpet": "1.6.3",
-    "ent": "~0.0.5",
     "concat-stream": "~1.0.0",
-    "domify": "~0.2.0"
+    "ent": "^2.2.0",
+    "trumpet": "1.6.3"
   },
   "devDependencies": {
     "tape": "^3.0.0"
@@ -15,18 +14,11 @@
   "scripts": {
     "test": "tape test/*.js"
   },
-  "testling": {
-    "files": "test/browser/*.js",
-    "browsers": [
-      "ie8", "ie9", "ie10", "chrome/20", "firefox/17",
-      "safari/5.1", "opera/12"
-    ]
-  },
   "repository": {
     "type": "git",
-    "url": "git://github.com/substack/hyperglue.git"
+    "url": "git://github.com/azer/htmlglue.git"
   },
-  "homepage": "https://github.com/substack/hyperglue",
+  "homepage": "https://github.com/azer/htmlglue",
   "keywords": [
     "browser",
     "html",
@@ -37,5 +29,6 @@
     "email": "mail@substack.net",
     "url": "http://substack.net"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "name": "htmlglue"
 }

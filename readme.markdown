@@ -1,24 +1,22 @@
-# hyperglue
+# htmlglue
+
+*This repo maintains the NodeJS implementation of [hyperglue](http://github.com/substack/hyperglue) which was removed later from the original codebase*
 
 update html elements by mapping query selectors to attributes, text, and
 hypertext
-
-[![browser support](http://ci.testling.com/substack/hyperglue.png)](http://ci.testling.com/substack/hyperglue)
-
-[![build status](https://secure.travis-ci.org/substack/hyperglue.png)](http://travis-ci.org/substack/hyperglue)
 
 This module works in both node and the browser.
 
 # example
 
 ``` js
-var hyperglue = require('hyperglue');
+var htmlglue = require('htmlglue');
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/article.html');
 
 function createArticle (doc) {
     var name = doc.title.replace(/[^A-Za-z0-9]+/g,'_');
-    return hyperglue(html, {
+    return htmlglue(html, {
         '.title a': {
             name: name,
             href: '#' + name,
@@ -55,7 +53,7 @@ console.log(createArticle({
 You can also duplicate existing elements in order to render arrays of results:
 
 ``` js
-var hyperglue = require('hyperglue');
+var htmlglue = require('hyperglue');
 
 var html = [
     '<div id="rows">',
@@ -67,7 +65,7 @@ var html = [
     '</div>'
 ].join('\n');
 
-console.log(hyperglue(html, {
+console.log(htmlglue(html, {
     '.row': [
         { '.name': 'T-REX', '.message': 'RAWR' },
         { '.name': 'robot', '.message': 'beep boop' },
@@ -96,48 +94,12 @@ output:
 </div>
 ```
 
-# methods
-
-``` js
-var hyperglue = require('hyperglue')
-```
-
-## hyperglue(src, updates)
-
-Return an html element from the source string or element `src` with `updates`
-applied to it.
-In the browser you get a complete html element. In node you get an object with
-an `innerHTML` property populated with the string contents of the replacement.
-
-`updates` should have [query selectors](http://www.w3.org/TR/CSS2/selector.html)
-as keys and target strings, numbers, or objects as values.
-
-Each `update` query selector can have the special pseudo-class `:first` which
-causes the selector to only match the first value like `querySelector()` instead
-of all the matching elements like `querySelectorAll()`, the default.
-
-If the target values in `updates` are strings or numbers, set the inner text
-content of the matching elements to that value.
-
-When the target values are html elements, replace the inner content at the
-selected element with a clone of the value.
-
-For target values of arrays, recursively apply `hyperglue(node.cloneNode(),
-value)` for each matching element in the array and then remove the original
-node. This feature makes rendering arrays of content super simple.
-
-If the target values in `updates` are non-html element objects, update the
-attributes on all matching elements with the keys in the target values. Use
-`'_text'` to set the text content and `'_html'` to set the innerHTML in object
-form. If `'_html'` is an HTML element, replace the inner content at the
-selector elements with a clone of the `'_html'` value.
-
 # install
 
 With [npm](https://npmjs.org) do:
 
 ```
-npm install hyperglue
+npm install htmlglue
 ```
 
 # license
