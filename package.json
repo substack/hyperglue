@@ -6,7 +6,7 @@
   "dependencies": {
     "concat-stream": "~1.0.0",
     "ent": "^2.2.0",
-    "trumpet": "^1.7.1"
+    "trumpet": "1.6.3"
   },
   "devDependencies": {
     "tape": "^3.0.0"
