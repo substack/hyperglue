@@ -167,4 +167,4 @@ MIT
 
 # kudos
 
-Inspried by [plates](https://npmjs.org/package/plates).
+Inspired by [plates](https://npmjs.org/package/plates).
