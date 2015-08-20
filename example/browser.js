@@ -1,4 +1,4 @@
-re('../');
+var hyperglue = require('../');
 var fs = require('fs');
 var html = fs.readFileSync(__dirname + '/article.html','utf-8');
 
@@ -35,5 +35,4 @@ process.nextTick(function(){
     body: '<h1>title text</h1>\n\n<p>beep boop.</p>\n\n<p><em>rawr</em></p>'
     }));
 });
-
 
