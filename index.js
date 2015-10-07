@@ -80,7 +80,13 @@ function bind (node, value) {
                     node.setAttribute(key, vk.prepend + node.getAttribute(key));
                 }
             }
-            else node.setAttribute(key, value[key]);
+            else {
+                if (value[key] === undefined) {
+                    node.removeAttribute(key);
+                } else {
+                    node.setAttribute(key, value[key]);
+                }
+            }
         });
     }
     else setText(node, value);
